@@ -1,18 +1,23 @@
-#define F_CPU 16000000UL
-
 #include "header.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
+#define led PB5
+#define portLed PORTB
+#define dirLed PORTB
+
 int main()
 {
-  setBit(DDRB,PB5);
-  setBit(PORTB,PB5);
+  //inicializar el stack pointer en la posición más baja de memoria
+  SPL = low(RAMEND);
+  SPH = high(RAMEND);
+  setBit(dirLed,led);
+  setBit(portLed,led);
   while(1)
   {
-    setBit(PORTB,PB5);
-    _delay_ms(1000);
-    clearBit(PORTB,PB5);
-    _delay_ms(1000);
+    setBit(portLed,led);
+    _delay_ms(300);
+    clearBit(portLed,led);
+    _delay_ms(300);
   }
 }
